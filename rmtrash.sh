@@ -1,30 +1,32 @@
 #!/bin/bash
 
-if [[ $# != 1 ]]
+if [[ "$#" != 1 ]]
 then
 echo "Wrong amount of parameters"
 exit 1
 fi
 
-if [[ ! -f $1 ]]
+if [[ ! -f "$1" ]]
 then
 echo "File is not exist"
+exit 1
 fi
-
-if [[ ! -d "~/.trash" ]]
+if [[ ! -d ~/.trash ]]
 then
-mkdir "~/.trash"
+mkdir ~/.trash
 fi
 
-if [[ ! -d "/.trash/counter" ]]
+if [[ ! -e ~/.trash/counter ]]
 then
-echo "1" > "/.trash/counter"
+echo "1" > ~/.trash/counter
 fi
 
-number =  $(cat "~/.trash/counter")
-ln "$pwd/$1" "~/.trash/number"
-rm "$pwd/$1"
-echo "$number:$pwd/$1" >> "~/.trash.log"
+number=$(cat ~/.trash/counter)
+filePath="$PWD/$1"
+
+ln "$filePath" ~/.trash/$number
+rm "$filePath"
+echo "$number:$filePath" >> ~/.trash.log
 
 let number=$number+1
-echo "$number" > "~/.trash/counter"
+echo $number > ~/.trash/counter

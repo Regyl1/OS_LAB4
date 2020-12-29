@@ -7,7 +7,8 @@ lastDate=$(echo $lastBackup | awk -F "Backup-" '{print $2}')
 changedFiles="Changed Files:"
 curDateInSec=$(date -d "$curDate" +%s)
 lastDateInSec=$(date -d "$lastDate" +%s)
-let dateDiff=$curDateInSec-$lastDateInSec
+let dateDiff=($curDateInSec-$lastDateInSec)/3600/24
+echo "$dateDiff"
 if [[ $dateDiff < 7 ]]
 then
 curBackup=$lastBackup
